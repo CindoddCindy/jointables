@@ -22,7 +22,7 @@ public class Post extends AuditModel{
     private String description;
 
     @NotNull
-    @Lob
+    //@Lob
     private String content;
 
     public Post() {
