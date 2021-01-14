@@ -7,6 +7,9 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "comments")
 public class Comment extends AuditModel{
@@ -25,8 +28,17 @@ public class Comment extends AuditModel{
     @JsonIgnore
     private Post post;
 
-    // Getters and Setters (Omitted for brevity)
+    @OneToMany(targetEntity=CommentChild.class, mappedBy="comments")
+    @OrderBy("name ASC")
+    private Set<CommentChild> commentChildSet = new HashSet<CommentChild>();
 
+    public Set<CommentChild> getCommentChildSet() {
+        return commentChildSet;
+    }
+
+    public void setCommentChildSet(Set<CommentChild> commentChildSet) {
+        this.commentChildSet = commentChildSet;
+    }
 
     public Comment() {
     }
@@ -57,5 +69,11 @@ public class Comment extends AuditModel{
 
     public void setPost(Post post) {
         this.post = post;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment [id=" + id + ", text=" + text + ", post=" + post
+                + "]";
     }
 }
