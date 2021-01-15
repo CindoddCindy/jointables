@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "comments")
-public class Comment extends AuditModel{
+@Table(name = "getcomments")
+public class GetComment extends AuditModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,20 +24,16 @@ public class Comment extends AuditModel{
     private String text;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "post_id", nullable = false)
+    @JoinColumn(name = "comment_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    private Post post;
+    private Comment comment;
 
-
-
-
-
-    public Comment() {
+    public GetComment(@NotNull String text) {
+        this.text = text;
     }
 
-    public Comment(@NotNull String text) {
-        this.text = text;
+    public GetComment() {
     }
 
     public Long getId() {
@@ -56,13 +52,11 @@ public class Comment extends AuditModel{
         this.text = text;
     }
 
-    public Post getPost() {
-        return post;
+    public Comment getComment() {
+        return comment;
     }
 
-    public void setPost(Post post) {
-        this.post = post;
+    public void setComment(Comment comment) {
+        this.comment = comment;
     }
-
-
 }

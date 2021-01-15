@@ -1,18 +1,15 @@
 package tessjoinss.tesjointables.repository;
 
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 import tessjoinss.tesjointables.model.Comment;
+import tessjoinss.tesjointables.model.GetComment;
 
 import java.util.Optional;
 
-@Repository
-public interface CommentRepository extends JpaRepository<Comment, Long> {
-   Page<Comment> findByPostId(Long postId, Pageable pageable);
-    Optional<Comment> findByIdAndPostId(Long id, Long postId);
-
+public interface GetCommentRepository extends JpaRepository<GetComment, Long> {
+    Page<GetComment> findByCommentId(Long commentId, Pageable pageable);
+    Optional<GetComment> findByIdAndCommentId(Long id, Long commentId);
 
 }
