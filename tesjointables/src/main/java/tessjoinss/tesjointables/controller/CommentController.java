@@ -12,7 +12,6 @@ import tessjoinss.tesjointables.exception.ResourceNotFoundException;
 import tessjoinss.tesjointables.model.Comment;
 import tessjoinss.tesjointables.repository.CommentRepository;
 import tessjoinss.tesjointables.repository.PostRepository;
-import tessjoinss.tesjointables.service.FileStorageService;
 
 import javax.validation.Valid;
 
@@ -24,8 +23,6 @@ public class CommentController {
     @Autowired
     private PostRepository postRepository;
 
-    @Autowired
-    private FileStorageService storageService;
 
 
     @GetMapping("/posts/{postId}/comments")
@@ -37,12 +34,7 @@ public class CommentController {
     @PostMapping("/posts/{postId}/comments")
     public Comment createComment(@PathVariable (value = "postId") Long postId,@RequestParam("file") MultipartFile file,
                                  @Valid @RequestBody Comment comment) {
-        try{
-            storageService.store(file);
 
-
-        }catch (Exception e){
-            }
         return postRepository.findById(postId).map(post -> {
             comment.setPost(post);
             return commentRepository.save(comment);
@@ -50,25 +42,6 @@ public class CommentController {
 
 
     }
-
-/*
-    @PostMapping("/upload")
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
-        String message = "";
-        try {
-            storageService.store(file);
-
-            message = "Uploaded the file successfully: " + file.getOriginalFilename();
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
-        } catch (Exception e) {
-            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
-        }
-    }
-
- */
-
-
 
 
     @PutMapping("/posts/{postId}/comments/{commentId}")
